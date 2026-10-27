@@ -1,6 +1,6 @@
 import socket, struct, threading, os, sys, secrets, string
 
-# ================= AES-128 MANUAL =================
+# AES-128 MANUAL
 def xtime(a):
     a <<= 1
     return (a ^ 0x11B) & 0xFF if a & 0x100 else a
@@ -125,7 +125,7 @@ def selftest():  # vektor uji FIPS-197 Appendix C.1
     print("cipher :", c.hex(), "(harus 69c4e0d86a7b0430d8cdb78070b4c55a)")
     print("decrypt:", dec_block(c, rk).hex())
 
-# ================= JARINGAN =================
+# JARINGAN
 KDC_PORT, PEER_PORT = 5000, 6000
 
 def send_frame(s, data): s.sendall(struct.pack('>I', len(data)) + data)
@@ -152,7 +152,7 @@ def rand_str(n, alphabet=string.ascii_letters + string.digits):
 
 def nonce(): return rand_str(8, string.digits)
 
-# ================= KDC =================
+# KDC
 def kdc_handle(conn, keys):
     try:
         req = recv_frame(conn).decode()
@@ -186,7 +186,7 @@ def run_kdc():
         elif p == '2': keys['Bob'] = ask_key("Kb baru")
         elif p == '0': return
 
-# ================= ALICE / BOB =================
+# ALICE / BOB 
 def recv_loop(st, conn, peer):
     try:
         while True:
